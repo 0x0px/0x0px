@@ -125,6 +125,20 @@ a {
 
 
 /* Button */
+button {
+  font-size: 15px;
+  color: #363f56;
+  background-color: #f1f2f5;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+button i {
+  margin-left: 4px;
+}
+
 .button {
   display: flex;
   align-items: center;
