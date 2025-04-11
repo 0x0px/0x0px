@@ -11,9 +11,6 @@ body {
 
 /* Resposive */
 @media (min-width: 580px) {
-  html, body {
-    height: 100%;
-  }
   #container {
     padding: 0px 40px 48px 40px;
   }
