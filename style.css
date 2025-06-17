@@ -4,7 +4,7 @@
   --color-primary: #ffffff;
   --color-secondary: #8a8a8a;
   --color-border: #282828;
-  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-overlay: rgba(0, 0, 0, 0.8);
   --color-buttoncircle: #3b3b3b;
   --color-icon: #6f6f6f;
 }
@@ -87,6 +87,7 @@ footer {
 #background {
   object-fit: cover;
   transform-origin: center;
+  filter: blur(12px);
 }
 #bgfilter {
   background-color: var(--color-overlay);
