@@ -207,6 +207,7 @@ hr {
   scroll-behavior: smooth;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel::-webkit-scrollbar {
@@ -216,6 +217,7 @@ hr {
 .carousel-track {
   display: flex;
   gap: 16px;
+  width: max-content;
 }
 
 .carousel-button {
@@ -264,6 +266,7 @@ hr {
 .youtube-thumbnail {
   position: relative;
   min-width: 320px;
+  max-width: 320px;
   height: 180px;
   border-radius: 8px;
   overflow: hidden;
