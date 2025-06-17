@@ -74,15 +74,19 @@ footer {
 
 /* Background */
 #background, #bgfilter {
-  width: 100%;
-  height: 100%;
+  width: 105%;
+  height: 105%;
   position: fixed;
+  top: -2.5%;
+  left: -2.5;
   z-index: -1;
   opacity: 0;
-  transition: opacity 2s;
+  transition: opacity 2s, transform 0.1s cubic-bezier(0.22,1,0.36,1);
+  will-change: transform;
 }
 #background {
   object-fit: cover;
+  transform-origin: center;
 }
 #bgfilter {
   background-color: var(--color-overlay);
