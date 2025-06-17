@@ -116,6 +116,14 @@
     const modal = document.getElementById('videoModal');
     const modalPlayer = document.getElementById('modalPlayer');
     const modalBackdrop = modal.querySelector('.modal-backdrop');
+    const background = document.getElementById('background');
+    const bgfilter = document.getElementById('bgfilter');
+
+    // Background Fade-in
+    requestAnimationFrame(() => {
+      background.classList.add('loaded');
+      bgfilter.classList.add('loaded');
+    });
 
     // Animation on Page Load
     requestAnimationFrame(() => {
