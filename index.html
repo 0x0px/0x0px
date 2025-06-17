@@ -90,11 +90,37 @@
 
             <div class="section">
                 <h2>projects</h2>
-                <div id="url">
-                    <div class="youtube-thumbnail" data-id="7fSWys7qjoY"></div>
-                    <div class="youtube-thumbnail" data-id="xhOdscrgyV8"></div>
-                    <div class="youtube-thumbnail" data-id="WKhcbShR08s"></div>
-                    <div class="youtube-thumbnail" data-id="rIr-d49JNRM"></div>
+                <div class="carousel-container">
+                    <button class="carousel-button prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel">
+                        <div class="carousel-track">
+                            <div class="youtube-thumbnail" data-id="7fSWys7qjoY">
+                                <div class="thumbnail-wrapper">
+                                    <img src="" alt="YouTube thumbnail">
+                                </div>
+                            </div>
+                            <div class="youtube-thumbnail" data-id="xhOdscrgyV8">
+                                <div class="thumbnail-wrapper">
+                                    <img src="" alt="YouTube thumbnail">
+                                </div>
+                            </div>
+                            <div class="youtube-thumbnail" data-id="WKhcbShR08s">
+                                <div class="thumbnail-wrapper">
+                                    <img src="" alt="YouTube thumbnail">
+                                </div>
+                            </div>
+                            <div class="youtube-thumbnail" data-id="rIr-d49JNRM">
+                                <div class="thumbnail-wrapper">
+                                    <img src="" alt="YouTube thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,10 +156,47 @@
       container.classList.add('show');
     });
 
+    // Carousel
+    const carousel = document.querySelector('.carousel');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+    const thumbnails = document.querySelectorAll('.youtube-thumbnail');
+
+    // 스크롤 위치에 따른 버튼 표시/숨김
+    function updateButtonVisibility() {
+      const isAtStart = carousel.scrollLeft === 0;
+      const isAtEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth;
+      
+      prevButton.classList.toggle('hidden', isAtStart);
+      nextButton.classList.toggle('hidden', isAtEnd);
+    }
+
+    // 스크롤 이벤트 리스너
+    carousel.addEventListener('scroll', updateButtonVisibility);
+
+    // 초기 버튼 상태 설정
+    updateButtonVisibility();
+
+    // 버튼 클릭 시 스크롤
+    prevButton.addEventListener('click', () => {
+      carousel.scrollBy({
+        left: -336,
+        behavior: 'smooth'
+      });
+    });
+
+    nextButton.addEventListener('click', () => {
+      carousel.scrollBy({
+        left: 336,
+        behavior: 'smooth'
+      });
+    });
+
     // Load YouTube Thumbnail
-    document.querySelectorAll('.youtube-thumbnail').forEach(el => {
+    thumbnails.forEach(el => {
       const id = el.dataset.id;
-      el.style.backgroundImage = `url(https://img.youtube.com/vi/${id}/maxresdefault.jpg)`;
+      const img = el.querySelector('img');
+      img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
       el.addEventListener('click', () => {
         const modal = document.getElementById('videoModal');
         const modalPlayer = document.getElementById('modalPlayer');

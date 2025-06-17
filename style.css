@@ -31,7 +31,7 @@ body {
   flex-direction: column;
 }
 #wrapper {
-  max-width: 560px;
+  max-width: 640px;
   height: 100%;
   align-items: center;
 }
@@ -188,16 +188,101 @@ hr {
 }
 
 
+/* Carousel */
+.carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.carousel {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-2);
+  border-radius: 999px;
+  color: var(--color-primary);
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.carousel-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel-button.prev {
+  left: 8px;
+}
+
+.carousel-button.next {
+  right: 8px;
+}
+
+.carousel-button:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(0.96);
+}
+
+.carousel-button i {
+  font-size: 16px;
+  margin: 0;
+}
+
 /* YouTube Thumbnail */
 .youtube-thumbnail {
   position: relative;
-  width: 100%;
-  aspect-ratio: 9 / 16;
+  min-width: 320px;
+  height: 180px;
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
   overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--color-surface-2);
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail-wrapper:hover {
+  transform: scale(1.04);
+}
+
+.thumbnail-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
 }
 
 
