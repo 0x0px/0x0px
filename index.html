@@ -102,4 +102,15 @@
     </div>
     </div>
 </body>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('container');
+    setTimeout(() => {
+      container.classList.add('show');
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    }, 50);
+  });
+</script>
 </html>
