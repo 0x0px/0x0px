@@ -1,3 +1,11 @@
+// Disable scroll restoration and force scroll to top
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+// Force scroll to top
+window.scrollTo(0, 0);
+
 // Background Fade-in
 function initBackground() {
   const background = document.getElementById('background');
