@@ -9,11 +9,9 @@ window.scrollTo(0, 0);
 // Background Fade-in
 function initBackground() {
   const background = document.getElementById('background');
-  const bgfilter = document.getElementById('bgfilter');
 
   requestAnimationFrame(() => {
     background.classList.add('loaded');
-    bgfilter.classList.add('loaded');
   });
 
   // Mouse movement based background animation
@@ -37,7 +35,6 @@ function initBackground() {
     currentY += (targetY - currentY) * smoothFactor;
     
     background.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    bgfilter.style.transform = `translate(${currentX}px, ${currentY}px)`;
     requestAnimationFrame(animateBackground);
   }
   animateBackground();
