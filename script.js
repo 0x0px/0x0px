@@ -120,10 +120,54 @@ function initModal() {
   });
 }
 
+// Typing Animation
+function initTypingEffect() {
+  const el = document.getElementById('typing-text');
+  if (!el) return;
+
+  const text = "✧˖°.ㅤinternet exclusiveㅤ✧˖°.";
+  const typingSpeed = 80;
+  const erasingSpeed = 40;
+  const delayAfterTyping = 2000;
+  const delayAfterErasing = 0;
+
+  el.innerHTML = text.split('').map(char => `<span style="opacity:0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+  const spans = el.querySelectorAll('span');
+
+  let i = 0;
+  let isErasing = false;
+
+  function type() {
+    if (!isErasing) {
+      if (i < spans.length) {
+        spans[i].style.transition = 'opacity 0.3s';
+        spans[i].style.opacity = '1';
+        i++;
+        setTimeout(type, typingSpeed);
+      } else {
+        setTimeout(() => { isErasing = true; i = 0; type(); }, delayAfterTyping);
+      }
+    } else {
+      if (i < spans.length) {
+        spans[i].style.transition = 'opacity 0.8s';
+        spans[i].style.opacity = '0';
+        i++;
+        setTimeout(type, erasingSpeed);
+      } else {
+        isErasing = false;
+        i = 0;
+        setTimeout(type, delayAfterErasing);
+      }
+    }
+  }
+  type();
+}
+
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
   initBackground();
   initContainer();
   initCarousel();
   initModal();
+  initTypingEffect();
 }); 
