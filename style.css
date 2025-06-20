@@ -57,7 +57,7 @@ body {
 #title {
   align-items: center;
   text-align: center;
-  gap: 20px;
+  gap: 24px;
 }
 .button-group {
   display: flex;
