@@ -59,6 +59,10 @@ body {
   text-align: center;
   gap: 20px;
 }
+.button-group {
+  display: flex;
+  gap: 12px;
+}
 .section {
   display: flex;
   flex-direction: column;

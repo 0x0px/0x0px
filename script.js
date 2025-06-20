@@ -163,6 +163,27 @@ function initTypingEffect() {
   type();
 }
 
+// Copy Mail
+function initCopyMail() {
+  const copyBtn = document.getElementById('copyMailBtn');
+  if (!copyBtn) return;
+
+  const mailAddress = '0x0px0x0@gmail.com';
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(mailAddress)
+      .then(() => {
+        copyBtn.innerHTML = 'copied! <i class="fa-solid fa-check fa-sm"></i>';
+        setTimeout(() => {
+          copyBtn.innerHTML = 'copy mail <i class="fa-regular fa-copy fa-sm"></i>';
+        }, 1500);
+      })
+      .catch(err => {
+        console.error('failed to copy: ', err);
+      });
+  });
+}
+
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
   initBackground();
@@ -170,4 +191,5 @@ window.addEventListener('DOMContentLoaded', () => {
   initCarousel();
   initModal();
   initTypingEffect();
+  initCopyMail();
 }); 
