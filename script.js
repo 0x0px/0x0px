@@ -14,30 +14,32 @@ function initBackground() {
     background.classList.add('loaded');
   });
 
-  // Mouse movement based background animation
-  let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-  const maxMove = 15; // Maximum movement in pixels
-  const smoothFactor = 0.05; // Lower value = smoother movement
+  // Mouse movement based background animation - only on larger screens
+  if (window.innerWidth > 640) {
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    const maxMove = 15; // Maximum movement in pixels
+    const smoothFactor = 0.05; // Lower value = smoother movement
 
-  document.addEventListener('mousemove', (e) => {
-    // Calculate mouse position relative to center (-1 to 1)
-    const x = (e.clientX / window.innerWidth - 0.5) * 2;
-    const y = (e.clientY / window.innerHeight - 0.5) * 2;
-    
-    // Invert the direction (multiply by -1)
-    targetX = -x * maxMove;
-    targetY = -y * maxMove;
-  });
+    document.addEventListener('mousemove', (e) => {
+      // Calculate mouse position relative to center (-1 to 1)
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      
+      // Invert the direction (multiply by -1)
+      targetX = -x * maxMove;
+      targetY = -y * maxMove;
+    });
 
-  function animateBackground() {
-    // Smooth interpolation between current and target position
-    currentX += (targetX - currentX) * smoothFactor;
-    currentY += (targetY - currentY) * smoothFactor;
-    
-    background.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    requestAnimationFrame(animateBackground);
+    function animateBackground() {
+      // Smooth interpolation between current and target position
+      currentX += (targetX - currentX) * smoothFactor;
+      currentY += (targetY - currentY) * smoothFactor;
+      
+      background.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      requestAnimationFrame(animateBackground);
+    }
+    animateBackground();
   }
-  animateBackground();
 }
 
 // Container Animation
