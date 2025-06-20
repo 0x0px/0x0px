@@ -275,24 +275,10 @@ hr {
   background-color: var(--color-surface-2);
   overflow: hidden;
   border-radius: 8px;
+  transition: transform 0.3s;
 }
-.thumbnail-wrapper {
-  overflow: hidden;
-}
-.thumbnail-wrapper img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s ease;
-}
-.thumbnail-wrapper img:hover {
-  transform: scale(1.04);
-}
-.thumbnail-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border: none;
+.youtube-thumbnail:hover {
+  transform: scale(0.98);
 }
 .project-info {
   display: flex;
