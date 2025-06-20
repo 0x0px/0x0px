@@ -2,6 +2,7 @@
   --color-surface-1: #141414;
   --color-surface-2: #1c1c1c;
   --color-surface-3: #232323;
+  --color-surface-3-t: rgba(35, 35, 35, 0.8);
   --color-primary: #ffffff;
   --color-secondary: #8a8a8a;
   --color-border: #282828;
@@ -198,7 +199,6 @@ hr {
   position: relative;
   width: 100%;
 }
-
 .carousel {
   width: 100%;
   overflow-x: auto;
@@ -209,58 +209,51 @@ hr {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
-
 .carousel::-webkit-scrollbar {
   display: none;
 }
-
 .carousel-track {
   display: flex;
   gap: 16px;
   width: max-content;
 }
-
 .carousel-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-surface-3);
+  background-color: var(--color-surface-3-t);
+  backdrop-filter: blur(4px);
   border-radius: 999px;
   color: var(--color-primary);
-  opacity: 0.8;
   transition: opacity 0.3s, transform 0.3s;
   z-index: 1;
   cursor: pointer;
 }
-
 .carousel-button.hidden {
   opacity: 0;
   pointer-events: none;
 }
-
 .carousel-button.prev {
-  left: 8px;
+  left: 12px;
 }
-
 .carousel-button.next {
-  right: 8px;
+  right: 12px;
 }
-
 .carousel-button:hover {
   opacity: 1;
-  transform: translateY(-50%) scale(0.96);
+  transform: translateY(-50%) scale(0.94);
 }
-
 .carousel-button i {
   font-size: 16px;
   margin: 0;
 }
+
 
 /* YouTube Thumbnail */
 .youtube-thumbnail {
