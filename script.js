@@ -125,32 +125,36 @@ function initTypingEffect() {
   const el = document.getElementById('typing-text');
   if (!el) return;
 
-  const text = "✧˖°.ㅤinternet exclusiveㅤ✧˖°.";
+  const text = "✧˖°.   internet exclusive   ✧˖°.";
   const typingSpeed = 80;
   const erasingSpeed = 40;
   const delayAfterTyping = 2000;
   const delayAfterErasing = 0;
 
-  el.innerHTML = text.split('').map(char => `<span style="opacity:0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-  const spans = el.querySelectorAll('span');
+  el.innerHTML = text.split('').map(char => {
+    const isSpace = char === ' ';
+    return `<span style="opacity:${isSpace ? 1 : 0};">${isSpace ? '&nbsp;' : char}</span>`;
+  }).join('');
+  
+  const charSpans = Array.from(el.querySelectorAll('span')).filter(span => span.innerHTML !== '&nbsp;');
 
   let i = 0;
   let isErasing = false;
 
   function type() {
     if (!isErasing) {
-      if (i < spans.length) {
-        spans[i].style.transition = 'opacity 0.3s';
-        spans[i].style.opacity = '1';
+      if (i < charSpans.length) {
+        charSpans[i].style.transition = 'opacity 0.3s';
+        charSpans[i].style.opacity = '1';
         i++;
         setTimeout(type, typingSpeed);
       } else {
         setTimeout(() => { isErasing = true; i = 0; type(); }, delayAfterTyping);
       }
     } else {
-      if (i < spans.length) {
-        spans[i].style.transition = 'opacity 0.8s';
-        spans[i].style.opacity = '0';
+      if (i < charSpans.length) {
+        charSpans[i].style.transition = 'opacity 0.8s';
+        charSpans[i].style.opacity = '0';
         i++;
         setTimeout(type, erasingSpeed);
       } else {
