@@ -385,3 +385,9 @@ hr {
     margin: 0 40px;
   }
 }
+
+@media (max-width: 639px) {
+  .carousel-button {
+    display: none;
+  }
+}
