@@ -127,7 +127,7 @@ function initTypingEffect() {
   const el = document.getElementById('typing-text');
   if (!el) return;
 
-  const text = "✧˖°.   internet exclusive   ✧˖°.";
+  const text = "✧˖°.   internet exclusive   .°˖✧";
   const typingSpeed = 80;
   const erasingSpeed = 40;
   const delayAfterTyping = 2000;
