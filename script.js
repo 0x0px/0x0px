@@ -24,7 +24,6 @@ function initBackground() {
       // Calculate mouse position relative to center (-1 to 1)
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
       const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      
       // Invert the direction (multiply by -1)
       targetX = -x * maxMove;
       targetY = -y * maxMove;
@@ -34,7 +33,6 @@ function initBackground() {
       // Smooth interpolation between current and target position
       currentX += (targetX - currentX) * smoothFactor;
       currentY += (targetY - currentY) * smoothFactor;
-      
       background.style.transform = `translate(${currentX}px, ${currentY}px)`;
       requestAnimationFrame(animateBackground);
     }
@@ -61,7 +59,6 @@ function initCarousel() {
   function updateButtonVisibility() {
     const isAtStart = carousel.scrollLeft === 0;
     const isAtEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth;
-    
     prevButton.classList.toggle('hidden', isAtStart);
     nextButton.classList.toggle('hidden', isAtEnd);
   }
@@ -74,17 +71,10 @@ function initCarousel() {
 
   // Button click scroll
   prevButton.addEventListener('click', () => {
-    carousel.scrollBy({
-      left: -336,
-      behavior: 'smooth'
-    });
+    carousel.scrollBy({ left: -336, behavior: 'smooth' });
   });
-
   nextButton.addEventListener('click', () => {
-    carousel.scrollBy({
-      left: 336,
-      behavior: 'smooth'
-    });
+    carousel.scrollBy({ left: 336, behavior: 'smooth' });
   });
 
   // Load YouTube Thumbnail
@@ -95,7 +85,6 @@ function initCarousel() {
     el.addEventListener('click', () => {
       const modal = document.getElementById('videoModal');
       const modalPlayer = document.getElementById('modalPlayer');
-      
       modalPlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&color=white" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
       document.body.style.overflow = 'hidden';
       modal.style.display = 'flex';
@@ -137,7 +126,6 @@ function initTypingEffect() {
     const isSpace = char === ' ';
     return `<span style="opacity:${isSpace ? 1 : 0};">${isSpace ? '&nbsp;' : char}</span>`;
   }).join('');
-  
   const charSpans = Array.from(el.querySelectorAll('span')).filter(span => span.innerHTML !== '&nbsp;');
 
   let i = 0;
@@ -190,6 +178,125 @@ function initCopyMail() {
   });
 }
 
+// Message Form: Discord Webhook integration & rate limit
+function initMessageForm() {
+  const form = document.getElementById('messageForm');
+  if (!form) return;
+  const msgInput = document.getElementById('msgContent');
+  const sendBtn = document.getElementById('msgSendBtn');
+  const descEl = document.querySelector('.section-header .desc');
+  const defaultDesc = descEl ? descEl.textContent : '';
+  let msgTimeout = null;
+  let msgActive = false;
+  let pendingMsg = null;
+
+  // Auto-resize textarea (fix initial and input height)
+  function autoResizeTextarea() {
+    msgInput.style.height = 'auto';
+    msgInput.style.height = msgInput.scrollHeight + 'px';
+  }
+  msgInput.setAttribute('rows', '1');
+  autoResizeTextarea();
+  msgInput.addEventListener('input', autoResizeTextarea);
+
+  // Unified message display (success, error, normal)
+  function showMessage(msg, type = 'normal') {
+    if (!descEl) return;
+    // If the same message is already active, ignore
+    if (msgActive && descEl.textContent === msg) return;
+    // If a new message is received, stop the current animation/timer and start immediately
+    if (msgTimeout) {
+      clearTimeout(msgTimeout);
+      msgTimeout = null;
+    }
+    msgActive = true;
+    pendingMsg = null;
+    descEl.textContent = msg;
+    descEl.classList.remove('fadeout', 'fadein', 'error', 'success', 'success-anim', 'shake');
+    if (type === 'error') descEl.classList.add('error', 'shake');
+    if (type === 'success') descEl.classList.add('success');
+    setTimeout(() => {
+      if (type === 'error') descEl.classList.remove('shake');
+      msgTimeout = setTimeout(() => {
+        descEl.classList.add('fadeout');
+        setTimeout(() => {
+          descEl.classList.remove('fadeout', 'error', 'success');
+          descEl.textContent = defaultDesc;
+          descEl.classList.add('fadein');
+          setTimeout(() => {
+            descEl.classList.remove('fadein');
+            msgActive = false;
+          }, 400);
+          msgTimeout = null;
+        }, 400);
+      }, 1000);
+    }, type === 'error' ? 500 : 0);
+  }
+
+  // Webhook URL
+  const WEBHOOK_PROXY_URL = 'https://webhook.0x0px.net';
+
+  // Only allow one message per 10 seconds
+  const LIMIT_SECONDS = 10;
+  const STORAGE_KEY = 'msgLastSent';
+
+  function canSend() {
+    const last = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+    const now = Date.now();
+    return (now - last) > LIMIT_SECONDS * 1000;
+  }
+
+  function updateLastSent() {
+    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+  }
+
+  function getCurrentTimeString() {
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, '0');
+    return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!canSend()) {
+      showMessage('you can only send one message every 10 seconds.', 'error');
+      return;
+    }
+    const message = msgInput.value.trim();
+    if (!message) {
+      showMessage('please enter a message.', 'error');
+      return;
+    }
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'sending...';
+    // Discord Webhook message format
+    const timeStr = getCurrentTimeString();
+    const content = `📩  **새 메시지** — _${timeStr}_\n> ${message.replace(/\n/g, '\n> ')}`;
+    fetch(WEBHOOK_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    })
+    .then(res => {
+      if (res.ok) {
+        updateLastSent();
+        form.reset();
+        autoResizeTextarea();
+        showMessage('message sent successfully!', 'success');
+      } else {
+        showMessage('failed to send. please try again later.', 'error');
+      }
+    })
+    .catch(() => {
+      showMessage('failed to send. please check your network.', 'error');
+    })
+    .finally(() => {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'send';
+    });
+  });
+}
+
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
   initBackground();
@@ -198,4 +305,5 @@ window.addEventListener('DOMContentLoaded', () => {
   initModal();
   initTypingEffect();
   initCopyMail();
+  initMessageForm();
 }); 
