@@ -453,3 +453,34 @@ hr {
     display: none;
   }
 }
+
+
+/* Custom Cursor */
+html, body {
+  cursor: url('images/cursor_x.png') 16 16, auto;
+}
+
+a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
+  cursor: url('images/cursor_o.png') 16 16, auto;
+}
+
+/* Cursor Follower */
+#cursorFollower {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-9999px, -9999px); /* hide off-screen initially */
+  transition: transform 0.1s linear, opacity 0.3s ease;
+  opacity: 0;
+  display: block;
+}
+
+#cursorFollower img {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+}

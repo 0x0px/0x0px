@@ -292,6 +292,148 @@ function initMessageForm() {
   });
 }
 
+
+// Cursor Follower
+const follower = document.getElementById('cursorFollower');
+let targetX = 0;
+let targetY = 0;
+let currentX = 0;
+let currentY = 0;
+let initialized = false;
+
+let lastMouseX = 0;
+let lastMouseY = 0;
+let shakeTimer = null;
+let shakeTriggered = false;
+let isShakeActive = false; // Added flag for shake image active
+const shakeDuration = 1500; // in ms
+const shakeSrc = 'images/cursor_pet_3.png'; // your alternate image
+
+let lastAngle = null;
+let angleChangeHistory = [];
+
+document.addEventListener('mousemove', (e) => {
+  targetX = e.clientX;
+  targetY = e.clientY;
+
+  const now = performance.now();
+  const dx = e.clientX - lastMouseX;
+  const dy = e.clientY - lastMouseY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  // Ignore very small movements
+  const MIN_MOVEMENT_DISTANCE = 40;
+  if (distance < MIN_MOVEMENT_DISTANCE) return;
+
+  const timeDelta = now - (follower.lastMoveTime || now);
+
+  if (distance === 0) return;
+
+  const angle = Math.atan2(dy, dx);
+
+  if (lastAngle !== null) {
+    let deltaAngle = Math.abs(angle - lastAngle);
+    if (deltaAngle > Math.PI) {
+      deltaAngle = 2 * Math.PI - deltaAngle; // normalize
+    }
+
+    angleChangeHistory.push({ time: now, delta: deltaAngle });
+    // Keep only last 2 seconds
+    angleChangeHistory = angleChangeHistory.filter(a => now - a.time < 2000);
+
+    const significantChanges = angleChangeHistory.filter(a => a.delta > 0.6).length;
+
+    if (!shakeTriggered && significantChanges > 15) {
+      shakeTriggered = true;
+      followerImg.src = shakeSrc;
+      isShakeActive = true;
+      clearTimeout(shakeTimer);
+      shakeTimer = setTimeout(() => {
+        followerImg.src = defaultSrc;
+        shakeTriggered = false;
+        isShakeActive = false;
+      }, shakeDuration);
+    }
+  }
+
+  lastAngle = angle;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  follower.lastMoveTime = now;
+
+  if (!initialized) {
+    currentX = targetX;
+    currentY = targetY;
+    follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    initialized = true;
+  }
+});
+
+function animateFollower() {
+  const speed = 0.15; // Adjust for smoother or faster following
+  currentX += (targetX - currentX) * speed;
+  currentY += (targetY - currentY) * speed;
+  follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
+  requestAnimationFrame(animateFollower);
+}
+
+animateFollower();
+
+// Ensure cursor follower is initialized at the current mouse position
+function handleFirstMouseMove(e) {
+  targetX = e.clientX;
+  targetY = e.clientY;
+  currentX = targetX;
+  currentY = targetY;
+
+  follower.style.transition = 'none';
+  follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
+  follower.style.opacity = '0';
+
+  // Force reflow
+  void follower.offsetWidth;
+
+  requestAnimationFrame(() => {
+    follower.style.transition = 'transform 0.1s linear, opacity 0.3s ease';
+    follower.style.opacity = '1';
+  });
+
+  initialized = true;
+
+  document.removeEventListener('mousemove', handleFirstMouseMove);
+}
+
+document.addEventListener('mousemove', handleFirstMouseMove, { once: true });
+
+const followerImg = follower.querySelector('img');
+const defaultSrc = 'images/cursor_pet_1.png';
+const hoverSrc = 'images/cursor_pet_2.png';
+
+const hoverTargets = document.querySelectorAll(
+  'a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail'
+);
+
+hoverTargets.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    if (!isShakeActive) {
+      followerImg.src = hoverSrc;
+    }
+  });
+  el.addEventListener('mouseleave', () => {
+    if (!isShakeActive) {
+      followerImg.src = defaultSrc;
+    }
+  });
+});
+
+  // Hide cursor follower when modal is visible (use opacity with transition)
+  const modal = document.getElementById('videoModal');
+  const modalObserver = new MutationObserver(() => {
+    const isVisible = modal.classList.contains('visible');
+    follower.style.opacity = isVisible ? '0' : '1';
+  });
+  modalObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
+
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
   initBackground();
