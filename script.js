@@ -264,7 +264,7 @@ function initMessageForm() {
       return;
     }
     sendBtn.disabled = true;
-    sendBtn.textContent = 'sending...';
+    sendBtn.innerHTML = 'sending... <i class="fa-solid fa-spinner fa-spin fa-sm"></i>';
     // Send only the raw message. Formatting/timestamp is handled by the Cloudflare Worker.
     const content = message;
     fetch(WEBHOOK_PROXY_URL, {
@@ -287,7 +287,7 @@ function initMessageForm() {
     })
     .finally(() => {
       sendBtn.disabled = false;
-      sendBtn.textContent = 'send';
+      sendBtn.innerHTML = 'send <i class="fa-regular fa-paper-plane fa-sm"></i>';
     });
   });
 }
