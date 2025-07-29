@@ -454,6 +454,12 @@ hr {
   }
 }
 
+@media (max-width: 959px) {
+  #cursorFollower {
+    display: none !important;
+  }
+}
+
 
 /* Custom Cursor */
 html, body {
