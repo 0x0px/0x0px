@@ -109,6 +109,18 @@ function initModal() {
       modalPlayer.innerHTML = '';
     }, 300);
   });
+  // Allow screen reader users to focus backdrop and close modal with Enter/Space
+  modalBackdrop.setAttribute('tabindex', '0');
+  modalBackdrop.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      modal.classList.remove('visible');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modalPlayer.innerHTML = '';
+      }, 300);
+    }
+  });
 }
 
 // Typing Animation
