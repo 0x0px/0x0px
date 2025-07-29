@@ -250,13 +250,9 @@ function initMessageForm() {
     localStorage.setItem(STORAGE_KEY, Date.now().toString());
   }
 
-  function getCurrentTimeString() {
-    const now = new Date();
-    const pad = n => n.toString().padStart(2, '0');
-    return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-  }
 
-  form.addEventListener('submit', function(e) {
+
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
     if (!canSend()) {
       showMessage('you can only send one message every 10 seconds.', 'error');
@@ -269,9 +265,8 @@ function initMessageForm() {
     }
     sendBtn.disabled = true;
     sendBtn.textContent = 'sending...';
-    // Discord Webhook message format
-    const timeStr = getCurrentTimeString();
-    const content = `📩  **새 메시지** — _${timeStr}_\n> ${message.replace(/\n/g, '\n> ')}`;
+    // Send only the raw message. Formatting/timestamp is handled by the Cloudflare Worker.
+    const content = message;
     fetch(WEBHOOK_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -306,4 +301,4 @@ window.addEventListener('DOMContentLoaded', () => {
   initTypingEffect();
   initCopyMail();
   initMessageForm();
-}); 
+});
