@@ -116,16 +116,17 @@ function initTypingEffect() {
   const el = document.getElementById('typing-text');
   if (!el) return;
 
-  const text = "✧˖°.   internet exclusive   .°˖✧";
+  const text = '<span aria-hidden="true">✧˖°.</span>   internet exclusive   <span aria-hidden="true">.°˖✧</span>';
   const typingSpeed = 80;
   const erasingSpeed = 40;
   const delayAfterTyping = 2000;
   const delayAfterErasing = 0;
 
-  el.innerHTML = text.split('').map(char => {
-    const isSpace = char === ' ';
-    return `<span style="opacity:${isSpace ? 1 : 0};">${isSpace ? '&nbsp;' : char}</span>`;
-  }).join('');
+  el.innerHTML = text.replace(/<[^>]*>|[^<]/g, (match) => {
+    if (match.startsWith('<')) return match; // Keep HTML tags (e.g. <span aria-hidden="true">)
+    const isSpace = match === ' ';
+    return `<span style="opacity:${isSpace ? 1 : 0};">${isSpace ? '&nbsp;' : match}</span>`;
+  });
   const charSpans = Array.from(el.querySelectorAll('span')).filter(span => span.innerHTML !== '&nbsp;');
 
   let i = 0;

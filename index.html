@@ -24,11 +24,13 @@
     <div id="bgfilter"></div>
     <!-- Contents -->
     <div id="wrapper">
-    <div id="container">
+    <main id="container">
         <div id="contents">
             <div id="title">
-                <img id="profilePhoto" src="images/0x0pf.jpg">
-                <img src="images/0x0logo.svg" alt="0x0" height="72px">
+                <img id="profilePhoto" src="images/0x0pf.jpg" alt="0x0 profile photo">
+                <h1>
+                    <img src="images/0x0logo.svg" alt="0x0" height="72px">
+                </h1>
                 <p><b id="typing-text"></b></p>
                 <div class="button-group">
                     <a href="mailto:0x0px0x0@gmail.com">
@@ -43,7 +45,7 @@
             <hr>
 
             <div class="section side-padding">
-                <h2>social 💬</h2>
+                <h2>social <span aria-hidden="true">💬</span></h2>
                 <div id="url">
                     <a class="button" href="https://x.com/0x0x0px/" target="_blank">
                         <div>
@@ -51,7 +53,7 @@
                                 <i class="fa-brands fa-twitter fa-lg" style="color: #FFFFFF;"></i>
                             </div>
                             <div class="urlTitle">
-                                <p>bird</p>
+                                <p><span aria-hidden="true">bird</span></p>
                                 <p class="desc">twitter (x)</p>
                             </div>
                         </div>
@@ -63,7 +65,7 @@
                                 <i class="fa-brands fa-soundcloud fa-lg" style="color: #FFFFFF;"></i>
                             </div>
                             <div class="urlTitle">
-                                <p>cloud</p>
+                                <p><span aria-hidden="true">cloud</span></p>
                                 <p class="desc">soundcloud</p>
                             </div>
                         </div>
@@ -75,7 +77,7 @@
                                 <i class="fa-brands fa-instagram fa-lg" style="color: #FFFFFF;"></i>
                             </div>
                             <div class="urlTitle">
-                                <p>camera</p>
+                                <p><span aria-hidden="true">camera</span></p>
                                 <p class="desc">instagram</p>
                             </div>
                         </div>
@@ -87,7 +89,7 @@
                                 <i class="fa-brands fa-youtube fa-lg" style="color: #FFFFFF;"></i>
                             </div>
                             <div class="urlTitle">
-                                <p>play button</p>
+                                <p><span aria-hidden="true">play button</span></p>
                                 <p class="desc">youtube</p>
                             </div>
                         </div>
@@ -98,7 +100,7 @@
             <hr>
 
             <div class="section">
-                <h2 class="side-padding">projects 📚</h2>
+                <h2 class="side-padding">projects <span aria-hidden="true">📚</span></h2>
                 <div class="carousel-container">
                     <button class="carousel-button prev">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -106,7 +108,7 @@
                     <div class="carousel side-padding">
                         <div class="carousel-track">
                             <div class="youtube-thumbnail" data-id="7fSWys7qjoY">
-                                <img src="" alt="YouTube thumbnail">
+                                <img src="" alt="YouTube thumbnail" alt="Thumbnail for 'TAK - 'DKBK' Bootleg & Lightshow'">
                                 <div class="project-info">
                                     <div class="project-title">TAK - 'DKBK' Bootleg & Lightshow</div>
                                     <span class="project-tags">
@@ -116,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="youtube-thumbnail" data-id="xhOdscrgyV8">
-                                <img src="" alt="YouTube thumbnail">
+                                <img src="" alt="YouTube thumbnail" alt="Thumbnail for 'nintendo just dropped a hitech sample pack'">
                                 <div class="project-info">
                                     <div class="project-title">nintendo just dropped a hitech sample pack</div>
                                     <span class="project-tags">
@@ -125,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="youtube-thumbnail" data-id="WKhcbShR08s">
-                                <img src="" alt="YouTube thumbnail">
+                                <img src="" alt="YouTube thumbnail" alt="Thumbnail for 'Moe Shop + Vocaloid Remix'">
                                 <div class="project-info">
                                     <div class="project-title">Moe Shop + Vocaloid Remix 🤩</div>
                                     <span class="project-tags">
@@ -135,7 +137,7 @@
                                 </div>
                             </div>
                             <div class="youtube-thumbnail" data-id="rIr-d49JNRM">
-                                <img src="" alt="YouTube thumbnail">
+                                <img src="" alt="YouTube thumbnail" alt="Thumbnail for 'HiTECH입니다'">
                                 <div class="project-info">
                                     <div class="project-title">HiTECH입니다 💫</div>
                                     <span class="project-tags">
@@ -154,10 +156,11 @@
 
             <div class="section side-padding">
                 <div class="section-header">
-                    <h2>send something 💭</h2>
-                    <p class="desc">feel free to send me your thoughts or questions anonymously. i’ll try to reply on twitter!</p>
+                    <h2>send something <span aria-hidden="true">💭</span></h2>
+                    <p class="desc" aria-live="polite" aria-atomic="true">feel free to send me your thoughts or questions anonymously. i’ll try to reply on twitter!</p>
                 </div>
                 <form id="messageForm">
+                    <label for="msgContent" class="visually-hidden">type your message...</label>
                     <textarea id="msgContent" name="message" placeholder="type your message..." required maxlength="500" rows="4"></textarea>
                     <button type="submit" id="msgSendBtn">send <i class="fa-regular fa-paper-plane fa-sm"></i></button>
                 </form>
@@ -166,7 +169,7 @@
         <footer class="side-padding">
             <span class="desc">© 2025 0x0</span>
         </footer>
-    </div>
+    </main>
     </div>
   <div id="videoModal">
     <div class="modal-backdrop"></div>
