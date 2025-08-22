@@ -26,7 +26,7 @@
     <div id="wrapper">
     <main id="container">
         <div id="contents">
-            <div id="title">
+            <div id="title" class="side-padding">
                 <img id="profilePhoto" src="images/0x0pf.jpg" alt="0x0 profile photo">
                 <h1>
                     <img src="images/0x0logo.svg" alt="0x0" height="72px">
@@ -39,6 +39,9 @@
                     </button></a>
                     <button id="copyMailBtn">
                         copy mail <i class="fa-regular fa-copy fa-sm"></i>
+                    </button>
+                    <button id="copyDiscordBtn">
+                        0x0x0px <i class="fa-brands fa-discord fa-sm"></i>
                     </button>
                 </div>
             </div>
@@ -100,7 +103,38 @@
             <hr>
 
             <div class="section">
-                <h2 class="side-padding">projects <span aria-hidden="true">📚</span></h2>
+                <h2 class="side-padding">discography <span aria-hidden="true">🎵</span></h2>
+                <div class="carousel-container">
+                    <button class="carousel-button prev" aria-label="Previous slide">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel side-padding">
+                        <div class="carousel-track">
+                            <div class="music-thumbnail" data-youtube="5HOPaKOPWZ0" data-soundcloud-track="0x0px/nightwalker" data-audio="music/0x0_nightwalker.mp3">
+                                <img src="images/music/nightwalker.jpg" alt="album cover for 'nightwalker'">
+                                <div class="project-info">
+                                    <div class="project-title">nightwalker</div>
+                                    <p class="desc">anv10 submission</p>
+                                </div>
+                            </div>
+                            <div class="music-thumbnail" data-youtube="" data-soundcloud-track="" data-audio="">
+                                <img src="images/music/nightwalker.jpg" alt="album cover for 'nightwalker'">
+                                <div class="project-info">
+                                    <div class="project-title">more music comming soon</div>
+                                    <p class="desc">this is just placeholder, sorry</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button next" aria-label="Next slide">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <hr>
+
+            <div class="section" id="videography-section">
+                <h2 class="side-padding">videography <span aria-hidden="true">🎥</span></h2>
                 <div class="carousel-container">
                     <button class="carousel-button prev" aria-label="Previous slide">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -171,15 +205,54 @@
         </footer>
     </main>
     </div>
-  <div id="videoModal">
-    <div class="modal-backdrop" tabindex="0" role="button" aria-label="Close video modal"></div>
-    <div class="modal-content">
+  <div id="modal">
+    <div class="modal-backdrop" tabindex="0" role="button" aria-label="Close modal"></div>
+    <!-- Video Modal -->
+    <div class="modal-content video">
       <div id="modalPlayer"></div>
+    </div>
+    <!-- Music Modal -->
+    <div class="modal-content music hidden">
+      <img id="musicModalImage" src="" alt="Album cover">
+      <div class="music-control">
+        <div class="music-modal-info">
+          <h2 id="musicModalTitle"></h2>
+          <p class="desc" id="musicModalDesc"></p>
+        </div>
+        <!-- 내장 오디오 플레이어 -->
+        <audio id="musicModalAudio" style="display:none;"><source src="" type="audio/mpeg"></audio>
+        <div class="audio-player">
+          <button id="playPause"><i class="fa-solid fa-play"></i></button>
+          <span id="currentTime" class="desc">0:00</span>
+          <input type="range" id="seekBar" class="slider" value="0" min="0" step="1">
+          <span id="duration" class="desc">0:00</span>
+          <button id="repeatBtn" aria-label="Repeat">
+            <i class="fa-solid fa-repeat"></i>
+          </button>
+          <!-- Volume Button and Slider (refactored) -->
+          <button id="volumeBtn">
+            <i class="fa-solid fa-volume-high"></i>
+            <div class="volume-container">
+              <input type="range" id="volumeBar" class="slider" min="0" max="1" step="0.01" value="1">
+            </div>
+          </button>
+        </div>
+        <div class="music-modal-buttons">
+          <a id="musicModalYoutube" href="" target="_blank" class="music-modal-button">
+            <i class="fa-brands fa-youtube"></i>
+            YouTube
+          </a>
+          <a id="musicModalSoundcloud" href="" target="_blank" class="music-modal-button">
+            <i class="fa-brands fa-soundcloud"></i>
+            SoundCloud
+          </a>
+        </div>
+      </div>
     </div>
   </div>
   <div id="cursorFollower">
     <img src="images/cursor_pet_1.png" alt="follower">
   </div>
 </body>
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </html>
