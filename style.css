@@ -560,20 +560,40 @@ hr {
 }
 
 
-/* Volume slider and button (refactored) */
-#volumeBtn i {
-  transition: color 0.2s;
+
+/* --- Volume Button & Slider (wrapper-based hover logic) --- */
+.volume-wrapper {
+  position: relative;
+  display: inline-block;
 }
-#volumeBtn.muted i {
-  color: var(--color-error); /* indicate muted */
+
+#volumeBtn {
+  transition: transform 0.2s ease;
+}
+
+/* Only button scales */
+.volume-wrapper:hover #volumeBtn {
+  transform: scale(0.9);
+}
+
+.volume-container-wrapper {
+  position: absolute;
+  top: -360%; /* adjust as needed to position container above button */
+  left: 50%;
+  width: 40px;
+  height: 140px;
+  transform: translateX(-50%);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.volume-wrapper:hover .volume-container-wrapper {
+  display: flex;
 }
 
 .volume-container {
-  display: none;
-  position: absolute;
-  bottom: 120%;
   background-color: var(--color-surface-3);
-  /* Removed padding for alignment fix */
   border-radius: 999px;
   width: 32px;
   height: 128px;
@@ -591,9 +611,15 @@ hr {
   padding: 0;
 }
 
-#volumeBtn:hover .volume-container,
-#volumeBtn.active .volume-container {
+.volume-wrapper:hover .volume-container {
   display: block;
+}
+
+#volumeBtn i {
+  transition: color 0.2s;
+}
+#volumeBtn.muted i {
+  color: var(--color-error); /* indicate muted */
 }
 
 #musicModalAudio {

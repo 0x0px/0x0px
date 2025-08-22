@@ -229,13 +229,17 @@
           <button id="repeatBtn" aria-label="Repeat">
             <i class="fa-solid fa-repeat"></i>
           </button>
-          <!-- Volume Button and Slider (refactored) -->
-          <button id="volumeBtn">
-            <i class="fa-solid fa-volume-high"></i>
-            <div class="volume-container">
-              <input type="range" id="volumeBar" class="slider" min="0" max="1" step="0.01" value="1">
+          <!-- Volume Button and Slider wrapped for hover logic -->
+          <div class="volume-wrapper">
+            <button id="volumeBtn">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <div class="volume-container-wrapper">
+              <div class="volume-container">
+                <input type="range" id="volumeBar" class="slider" min="0" max="1" step="0.01" value="1">
+              </div>
             </div>
-          </button>
+          </div>
         </div>
         <div class="music-modal-buttons">
           <a id="musicModalYoutube" href="" target="_blank" class="music-modal-button">
