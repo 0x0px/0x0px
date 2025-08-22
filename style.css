@@ -396,6 +396,8 @@ hr {
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-height: 92vh;
+  overflow-y: auto;
 }
 
 #modal.visible .modal-content {
@@ -468,7 +470,7 @@ hr {
 
 .modal-content.music {
   width: auto;
-  max-width: 600px;
+  max-width: 500px;
   background-color: none;
   border-radius: 8px;
   display: flex;
