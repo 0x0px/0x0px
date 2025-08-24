@@ -63,6 +63,11 @@ body {
   text-align: center;
   gap: 24px;
 }
+.title-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .button-group {
   display: flex;
   gap: 12px;

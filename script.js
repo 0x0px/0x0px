@@ -212,4 +212,26 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
   });
+
+// Visitor Counter
+const visitorCounterEl = document.getElementById('visitorCount');
+
+function getOrdinalSuffix(n) {
+  const j = n % 10,
+        k = n % 100;
+  if (j === 1 && k !== 11) return "st";
+  if (j === 2 && k !== 12) return "nd";
+  if (j === 3 && k !== 13) return "rd";
+  return "th";
+}
+
+fetch("https://count.0x0px.net/visitor", { cache: "no-store" })
+  .then(res => res.json())
+  .then(data => {
+    if(visitorCounterEl) {
+      const count = data.value;
+      visitorCounterEl.textContent = `you are the ${count}${getOrdinalSuffix(count)} visitor ⸜(｡˃ ᵕ ˂ )⸝♡`;
+    }
+  })
+  .catch(err => console.error("visitor counter error:", err));
 });
