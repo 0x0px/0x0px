@@ -1,48 +1,57 @@
-// Modal is split into its own module
 import { initModal } from './js/modal.js';
 import { initMessageForm } from './js/messageForm.js';
 import { initCursorFollower } from './js/cursorFollower.js';
+
 // Disable scroll restoration and force scroll to top
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-
-// Force scroll to top
 window.scrollTo(0, 0);
 
-// Background Fade-in
-function initBackground() {
-  const background = document.getElementById('background');
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+let bgTargetX = 0, bgTargetY = 0, bgCurrentX = 0, bgCurrentY = 0;
+const smoothFactor = 0.05;
+const followerSpeed = 0.15;
+const maxMove = 15;
 
+function initBackgroundAndFollower() {
+  const background = document.getElementById('background');
+  const follower = document.getElementById('cursorFollower');
+
+  // Background Fade-In
   requestAnimationFrame(() => {
-    background.classList.add('loaded');
+    if (background) background.classList.add('loaded');
   });
 
-  // Mouse movement based background animation - only on larger screens
-  if (window.innerWidth > 640) {
-    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-    const maxMove = 15; // Maximum movement in pixels
-    const smoothFactor = 0.05; // Lower value = smoother movement
+  document.addEventListener('mousemove', (e) => {
+    // Cursor Follower
+    targetX = e.clientX;
+    targetY = e.clientY;
 
-    document.addEventListener('mousemove', (e) => {
-      // Calculate mouse position relative to center (-1 to 1)
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      // Invert the direction (multiply by -1)
-      targetX = -x * maxMove;
-      targetY = -y * maxMove;
-    });
+    // Background Fade-In
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    bgTargetX = -x * maxMove;
+    bgTargetY = -y * maxMove;
+  });
 
-    function animateBackground() {
-      // Smooth interpolation between current and target position
-      currentX += (targetX - currentX) * smoothFactor;
-      currentY += (targetY - currentY) * smoothFactor;
-      background.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      requestAnimationFrame(animateBackground);
-    }
-    animateBackground();
+  function animate() {
+    // Background Fade-In
+    bgCurrentX += (bgTargetX - bgCurrentX) * smoothFactor;
+    bgCurrentY += (bgTargetY - bgCurrentY) * smoothFactor;
+    background.style.transform = `translate(${bgCurrentX}px, ${bgCurrentY}px)`;
+
+    // Cursor Follower
+    currentX += (targetX - currentX) * followerSpeed;
+    currentY += (targetY - currentY) * followerSpeed;
+    follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+    requestAnimationFrame(animate);
   }
+
+  animate();
 }
+
 
 // Container Animation
 function initContainer() {
@@ -51,7 +60,6 @@ function initContainer() {
     container.classList.add('show');
   });
 }
-
 
 
 // Typing Animation
@@ -101,6 +109,7 @@ function initTypingEffect() {
   type();
 }
 
+
 // Copy Button Initialization
 function initCopyButton(buttonId, textToCopy, defaultText, copiedText) {
   const copyBtn = document.getElementById(buttonId);
@@ -145,9 +154,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     new Carousel(container);
   });
 
-  // Audio controller setup is handled inside modal.js when opening music modal
-
-  initBackground();
+  initBackgroundAndFollower();
   initContainer();
   initModal();
   initTypingEffect();
