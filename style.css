@@ -752,7 +752,7 @@ hr {
 }
 
 @media (max-width: 639px) {
-  .carousel-button {
+  .carousel-button, #volumeBtn {
     display: none;
   }
 }
