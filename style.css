@@ -823,4 +823,9 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
     width: 100%;
     flex: auto;
   }
+
+  .music-thumbnail, .youtube-thumbnail {
+    max-width: 280px;
+    min-width: 280px;
+  }
 }
