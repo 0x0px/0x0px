@@ -345,6 +345,11 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .project-tags {
   display: flex;
   gap: 4px;

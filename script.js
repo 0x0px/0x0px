@@ -143,6 +143,28 @@ function initCopyMail() {
   );
 }
 
+// Format release date to yy.MM.dd in user's local timezone
+function formatReleaseDateLocal(dateStr) {
+  if (!dateStr) return null;
+  const date = new Date(dateStr);
+  if (isNaN(date)) return null;
+  const yy = String(date.getFullYear()).slice(2);
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yy}.${mm}.${dd}`;
+}
+
+// Set release date text for target element
+function setReleaseDate(targetElement, dateStr) {
+  if (!targetElement) return;
+  const formatted = formatReleaseDateLocal(dateStr);
+  if (formatted) {
+    targetElement.textContent = `${formatted}`;
+  } else {
+    targetElement.textContent = ''; // hide if no date
+  }
+}
+
 
 // Initialize
 window.addEventListener('DOMContentLoaded', async () => {
@@ -161,4 +183,33 @@ window.addEventListener('DOMContentLoaded', async () => {
   initCopyMail();
   initMessageForm();
   initCursorFollower();
+
+  // Add release dates to each music thumbnail's .project-info .release-date element
+  document.querySelectorAll('.music-thumbnail').forEach(el => {
+    const releaseEl = el.querySelector('.project-info .release-date');
+    if (!releaseEl) return;
+    const dateStr = el.dataset.releaseDate || '';
+    setReleaseDate(releaseEl, dateStr);
+    // Modal trigger
+    el.addEventListener('click', () => {
+      const title = el.querySelector('.project-title')?.textContent || '';
+      const desc = el.querySelector('.desc:not(.release-date)')?.textContent || '';
+      const imageSrc = el.querySelector('img')?.src || '';
+      const youtubeId = el.dataset.youtube || '';
+      const soundcloudTrack = el.dataset.soundcloudTrack || '';
+      const audioSrc = el.dataset.audio || '';
+      const releaseDate = el.dataset.releaseDate || '';
+      import('./js/modal.js').then(mod => {
+        mod.openMusicModal({
+          title,
+          desc,
+          imageSrc,
+          youtubeId,
+          soundcloudTrack,
+          audioSrc,
+          releaseDate
+        });
+      });
+    });
+  });
 });

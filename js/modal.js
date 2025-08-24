@@ -66,7 +66,7 @@ export function openVideoModal(youtubeId) {
   requestAnimationFrame(() => modal.classList.add('visible'));
 }
 
-export async function openMusicModal({ title = '', desc = '', imageSrc = '', youtubeId, soundcloudTrack, audioSrc }) {
+export async function openMusicModal({ title = '', desc = '', imageSrc = '', youtubeId, soundcloudTrack, audioSrc, releaseDate }) {
   const modal = document.getElementById('modal');
   if (!modal) return;
   const modalImage = document.getElementById('musicModalImage');
@@ -86,7 +86,23 @@ export async function openMusicModal({ title = '', desc = '', imageSrc = '', you
 
   if (modalImage) modalImage.src = imageSrc;
   if (modalTitle) modalTitle.textContent = title;
-  if (modalDesc) modalDesc.textContent = desc;
+  // Description and release date display
+  if (modalDesc) {
+    if (releaseDate) {
+      const date = new Date(releaseDate);
+      if (!isNaN(date)) {
+        const yy = String(date.getFullYear()).slice(2);
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        const formattedDate = `${yy}.${mm}.${dd}`;
+        modalDesc.textContent = `${desc} / ${formattedDate}`;
+      } else {
+        modalDesc.textContent = desc;
+      }
+    } else {
+      modalDesc.textContent = desc;
+    }
+  }
 
   if (modalYoutube) {
     if (youtubeId) {

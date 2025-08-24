@@ -110,18 +110,24 @@
                     </button>
                     <div class="carousel side-padding">
                         <div class="carousel-track">
-                            <div class="music-thumbnail" data-youtube="5HOPaKOPWZ0" data-soundcloud-track="0x0px/nightwalker" data-audio="music/0x0_nightwalker.mp3">
+                            <div class="music-thumbnail" data-youtube="5HOPaKOPWZ0" data-soundcloud-track="0x0px/nightwalker" data-audio="music/0x0_nightwalker.mp3" data-release-date="2025-08-19T05:40:00Z">
                                 <img src="images/music/nightwalker.jpg" alt="album cover for 'nightwalker'">
                                 <div class="project-info">
                                     <div class="project-title">nightwalker</div>
-                                    <p class="desc">anv10 submission</p>
+                                    <div class="row-between">
+                                        <p class="desc">anv10 submission</p>
+                                        <p class="desc release-date"></p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="music-thumbnail" data-youtube="" data-soundcloud-track="" data-audio="">
                                 <img src="images/music/placeholder.jpg" alt="placeholder">
                                 <div class="project-info">
                                     <div class="project-title">more music comming soon</div>
-                                    <p class="desc">this is just a placeholder, sorry</p>
+                                    <div class="row-between">
+                                        <p class="desc">this is just a placeholder, sorry</p>
+                                        <p class="desc release-date"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,11 +220,11 @@
     <!-- Music Modal -->
     <div class="modal-content music hidden">
       <img id="musicModalImage" src="" alt="Album cover">
-      <div class="music-control">
-        <div class="music-modal-info">
-          <h2 id="musicModalTitle"></h2>
-          <p class="desc" id="musicModalDesc"></p>
-        </div>
+        <div class="music-control">
+          <div class="music-modal-info">
+            <h2 id="musicModalTitle"></h2>
+            <p class="desc" id="musicModalDesc"></p>
+          </div>
         <!-- 내장 오디오 플레이어 -->
         <audio id="musicModalAudio" style="display:none;"><source src="" type="audio/mpeg"></audio>
         <div class="audio-player">
