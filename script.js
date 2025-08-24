@@ -216,6 +216,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 // Visitor Counter
 const visitorCounterEl = document.getElementById('visitorCount');
 
+if (visitorCounterEl) {
+  visitorCounterEl.textContent = '(„• ֊ •„)'; // Loading
+}
+
 function getOrdinalSuffix(n) {
   const j = n % 10,
         k = n % 100;
