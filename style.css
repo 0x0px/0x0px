@@ -492,10 +492,6 @@ hr {
   /* keep display: flex for video modal too */
 }
 
-.audio-player {
-  /* already has display: flex, do not override in JS */
-}
-
 /* Utility: hide elements via class, not JS display */
 .hidden {
   display: none !important;
@@ -506,7 +502,7 @@ hr {
   flex-direction: column;
   padding: 24px;
   border-radius: 12px;
-  gap: 12px;
+  gap: 16px;
   background-color: var(--color-surface-1);
 }
 
@@ -518,7 +514,6 @@ hr {
   border-radius: 6px;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
 }
 
 /* Unified slider style for seekBar and volumeBar */
@@ -725,45 +720,6 @@ hr {
 }
 
 
-/* Responsive */
-@media (min-width: 640px) {
-  #container {
-    border-radius: 12px;
-  }
-  #wrapper {
-    padding: 64px 0px 64px 0px;
-  }
-  #url {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .side-padding {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  .carousel-button {
-    left: 40px;
-  }
-  .carousel-button.next {
-    right: 40px;
-  }
-  hr {
-    margin: 0 40px;
-  }
-}
-
-@media (max-width: 639px) {
-  .carousel-button, #volumeBtn {
-    display: none;
-  }
-}
-
-@media (max-width: 959px) {
-  #cursorFollower {
-    display: none !important;
-  }
-}
-
-
 /* Custom Cursor */
 html, body {
   cursor: url('images/cursor_x.png') 16 16, auto;
@@ -801,4 +757,70 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
 #repeatBtn.active i {
   color: var(--color-primary);
   transform: rotate(180deg);
+}
+
+
+.seek-row {
+  display: flex;
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+
+
+
+/* Responsive */
+@media (max-width: 959px) {
+  #cursorFollower {
+    display: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  #container {
+    border-radius: 12px;
+  }
+  #wrapper {
+    padding: 64px 0px 64px 0px;
+  }
+  #url {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .side-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .carousel-button {
+    left: 40px;
+  }
+  .carousel-button.next {
+    right: 40px;
+  }
+  hr {
+    margin: 0 40px;
+  }
+}
+
+@media (max-width: 639px) {
+  .carousel-button, .volume-wrapper {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .audio-player {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .audio-player #repeatBtn {
+    order: 1;
+  }
+  .audio-player #playPause {
+    order: 2;
+  }
+  .audio-player .seek-row {
+    width: 100%;
+    flex: auto;
+  }
 }

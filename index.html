@@ -223,9 +223,11 @@
         <audio id="musicModalAudio" style="display:none;"><source src="" type="audio/mpeg"></audio>
         <div class="audio-player">
           <button id="playPause"><i class="fa-solid fa-play"></i></button>
-          <span id="currentTime" class="desc">0:00</span>
-          <input type="range" id="seekBar" class="slider" value="0" min="0" step="1">
-          <span id="duration" class="desc">0:00</span>
+          <div class="seek-row">
+            <span id="currentTime" class="desc">0:00</span>
+            <input type="range" id="seekBar" class="slider" value="0" min="0" step="1">
+            <span id="duration" class="desc">0:00</span>
+          </div>
           <button id="repeatBtn" aria-label="Repeat">
             <i class="fa-solid fa-repeat"></i>
           </button>
