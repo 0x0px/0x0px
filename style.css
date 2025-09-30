@@ -47,7 +47,6 @@ body {
   position: relative;
   transform: translateY(80px);
   transition: opacity 0.3s, transform 1s cubic-bezier(0, 1.3, 0.2, 1);
-  will-change: opacity, transform;
   padding-bottom: 48px;
   border-radius: 0;
 }
@@ -107,7 +106,6 @@ footer {
   object-fit: cover;
   transform-origin: center;
   /* filter: blur(12px); */
-  will-change: transform;
   transition: opacity 1s;
   opacity: 0;
 }

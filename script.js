@@ -28,6 +28,7 @@ function initBackgroundAndFollower() {
   const startBgAnim = () => {
     if (bgAnimating) return;
     bgAnimating = true;
+    background.style.willChange = 'transform';
     const step = () => {
       const now = performance.now();
       bgCurrentX += (bgTargetX - bgCurrentX) * smoothFactor;
@@ -39,6 +40,7 @@ function initBackgroundAndFollower() {
       const idle = now - lastBgMoveTs > 200;
       if (dx < 0.1 && dy < 0.1 && idle) {
         bgAnimating = false;
+        background.style.willChange = '';
         return;
       }
       requestAnimationFrame(step);
