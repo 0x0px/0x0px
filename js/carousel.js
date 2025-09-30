@@ -37,7 +37,7 @@ export class Carousel {
         this.prevButton?.classList.toggle('hidden', isAtStart);
         this.nextButton?.classList.toggle('hidden', isAtEnd);
       };
-      this.viewport.addEventListener('scroll', updateButtonVisibility);
+      this.viewport.addEventListener('scroll', updateButtonVisibility, { passive: true });
       updateButtonVisibility();
 
       // Button click scroll

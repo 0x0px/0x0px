@@ -832,6 +832,26 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
   }
 }
 
+/* Reduce motion for users who prefer it; also helps lower GPU usage */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  #background {
+    transition: none;
+  }
+  #container {
+    transition: none;
+    transform: none;
+  }
+  .button, button, .youtube-thumbnail, .music-thumbnail, .music-modal-button, .carousel-button {
+    transition: none;
+  }
+}
+
 @media (max-width: 480px) {
   .audio-player {
     flex-wrap: wrap;

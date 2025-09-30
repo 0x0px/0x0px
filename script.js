@@ -8,48 +8,52 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 
-let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
 let bgTargetX = 0, bgTargetY = 0, bgCurrentX = 0, bgCurrentY = 0;
 const smoothFactor = 0.05;
-const followerSpeed = 0.15;
 const maxMove = 15;
+let bgAnimating = false;
+let lastBgMoveTs = 0;
 
 function initBackgroundAndFollower() {
   const background = document.getElementById('background');
-  const follower = document.getElementById('cursorFollower');
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Background Fade-In
   requestAnimationFrame(() => {
     if (background) background.classList.add('loaded');
   });
 
-  document.addEventListener('mousemove', (e) => {
-    // Cursor Follower
-    targetX = e.clientX;
-    targetY = e.clientY;
+  if (!background || prefersReducedMotion) return; // Skip parallax when reduced motion
 
-    // Background Fade-In
+  const startBgAnim = () => {
+    if (bgAnimating) return;
+    bgAnimating = true;
+    const step = () => {
+      const now = performance.now();
+      bgCurrentX += (bgTargetX - bgCurrentX) * smoothFactor;
+      bgCurrentY += (bgTargetY - bgCurrentY) * smoothFactor;
+      background.style.transform = `translate(${bgCurrentX}px, ${bgCurrentY}px)`;
+
+      const dx = Math.abs(bgTargetX - bgCurrentX);
+      const dy = Math.abs(bgTargetY - bgCurrentY);
+      const idle = now - lastBgMoveTs > 200;
+      if (dx < 0.1 && dy < 0.1 && idle) {
+        bgAnimating = false;
+        return;
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2;
     const y = (e.clientY / window.innerHeight - 0.5) * 2;
     bgTargetX = -x * maxMove;
     bgTargetY = -y * maxMove;
-  });
-
-  function animate() {
-    // Background Fade-In
-    bgCurrentX += (bgTargetX - bgCurrentX) * smoothFactor;
-    bgCurrentY += (bgTargetY - bgCurrentY) * smoothFactor;
-    background.style.transform = `translate(${bgCurrentX}px, ${bgCurrentY}px)`;
-
-    // Cursor Follower
-    currentX += (targetX - currentX) * followerSpeed;
-    currentY += (targetY - currentY) * followerSpeed;
-    follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
+    lastBgMoveTs = performance.now();
+    startBgAnim();
+  }, { passive: true });
 }
 
 

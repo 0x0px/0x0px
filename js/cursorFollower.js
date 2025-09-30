@@ -1,6 +1,7 @@
 export function initCursorFollower() {
   const follower = document.getElementById('cursorFollower');
   if (!follower) return;
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const followerImg = follower.querySelector('img');
   const defaultSrc = 'images/cursor_pet_1.png';
@@ -13,6 +14,7 @@ export function initCursorFollower() {
   let shakeTimer = null, shakeTriggered = false, isShakeActive = false;
   const shakeDuration = 1500;
   let lastAngle = null; let angleChangeHistory = [];
+  let animating = false; let lastMoveTs = 0;
 
   document.addEventListener('mousemove', (e) => {
     targetX = e.clientX; targetY = e.clientY;
@@ -36,16 +38,27 @@ export function initCursorFollower() {
       lastAngle = angle; lastMouseX = e.clientX; lastMouseY = e.clientY;
       if (!initialized) { currentX = targetX; currentY = targetY; follower.style.transform = `translate(${currentX}px, ${currentY}px)`; initialized = true; }
     }
-  });
+    lastMoveTs = now;
+    startAnim();
+  }, { passive: true });
 
-  function animateFollower() {
+  if (prefersReducedMotion) {
+    follower.style.display = 'none';
+    return;
+  }
+
+  function step() {
     const speed = 0.15;
     currentX += (targetX - currentX) * speed;
     currentY += (targetY - currentY) * speed;
     follower.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    requestAnimationFrame(animateFollower);
+    const dx = Math.abs(targetX - currentX);
+    const dy = Math.abs(targetY - currentY);
+    const idle = performance.now() - lastMoveTs > 200;
+    if (dx < 0.1 && dy < 0.1 && idle) { animating = false; return; }
+    requestAnimationFrame(step);
   }
-  animateFollower();
+  function startAnim() { if (!animating) { animating = true; requestAnimationFrame(step); } }
 
   function handleFirstMouseMove(e) {
     targetX = e.clientX; targetY = e.clientY; currentX = targetX; currentY = targetY;
@@ -55,7 +68,7 @@ export function initCursorFollower() {
     requestAnimationFrame(() => { follower.style.transition = 'transform 0.1s linear, opacity 0.3s ease'; follower.style.opacity = '1'; });
     initialized = true; document.removeEventListener('mousemove', handleFirstMouseMove);
   }
-  document.addEventListener('mousemove', handleFirstMouseMove, { once: true });
+  document.addEventListener('mousemove', handleFirstMouseMove, { once: true, passive: true });
 
   const hoverTargets = document.querySelectorAll('a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail, .music-thumbnail');
   hoverTargets.forEach(el => {
