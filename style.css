@@ -243,6 +243,11 @@ hr {
   gap: 16px;
   width: max-content;
 }
+/* Add right-side padding using pseudo-element for Safari */
+.carousel-track::after {
+  content: '';
+  flex: 0 0 0px; /* right-side padding for Safari */
+}
 .carousel-button {
   position: absolute;
   top: 50%;
@@ -715,6 +720,11 @@ hr {
   padding-right: 16px;
 }
 
+/* Remove right padding for carousel.side-padding, now handled by ::after */
+.carousel.side-padding {
+  padding-right: 0;
+}
+
 
 /* Visually Hidden (Accessibility Utility) */
 .visually-hidden {
@@ -800,6 +810,10 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
   .side-padding {
     padding-left: 40px;
     padding-right: 40px;
+  }
+  .carousel-track::after {
+    content: '';
+    flex: 0 0 24px;
   }
   .carousel-button {
     left: 40px;
