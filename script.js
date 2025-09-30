@@ -74,10 +74,17 @@ function initTypingEffect() {
   if (!el) return;
 
   const text = '<span aria-hidden="true">✧˖°.</span>   internet exclusive   <span aria-hidden="true">.°˖✧</span>';
-  const typingSpeed = 80;
-  const erasingSpeed = 40;
+  const typingSpeed = 100;
+  const erasingSpeed = 60;
   const delayAfterTyping = 2000;
   const delayAfterErasing = 0;
+
+  // Respect reduced-motion preference: render static text
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    el.innerHTML = text;
+    return;
+  }
 
   el.innerHTML = text.replace(/<[^>]*>|[^<]/g, (match) => {
     if (match.startsWith('<')) return match; // Keep HTML tags (e.g. <span aria-hidden="true">)
@@ -90,6 +97,11 @@ function initTypingEffect() {
   let isErasing = false;
 
   function type() {
+    // Skip animation while tab is not visible to reduce work; keep timing cadence
+    if (document.hidden) {
+      setTimeout(type, isErasing ? erasingSpeed : typingSpeed);
+      return;
+    }
     if (!isErasing) {
       if (i < charSpans.length) {
         charSpans[i].style.transition = 'opacity 0.3s';
