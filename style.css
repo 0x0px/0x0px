@@ -215,7 +215,7 @@ hr {
   height: 1px;
   background-color: var(--color-border);
   border: 0;
-  margin: 0 16px;
+  margin: 0 20px;
 }
 
 
@@ -244,7 +244,7 @@ hr {
 /* Add right-side padding using pseudo-element for Safari */
 .carousel-track::after {
   content: '';
-  flex: 0 0 0px; /* right-side padding for Safari */
+  flex: 0 0 4px; /* right-side padding for Safari */
 }
 .carousel-button {
   position: absolute;
@@ -714,8 +714,8 @@ hr {
 
 /* Utility Classes */
 .side-padding {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Remove right padding for carousel.side-padding, now handled by ::after */
