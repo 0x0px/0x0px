@@ -828,6 +828,9 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail, .music
   #wrapper {
     padding: 0;
   }
+  body {
+    background-color: var(--color-surface-1);
+  }
 }
 
 /* Reduce motion for users who prefer it; also helps lower GPU usage */
