@@ -717,7 +717,7 @@ html, body {
   cursor: url('images/cursor_x.png') 16 16, auto;
 }
 
-a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail {
+a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail, .music-thumbnail {
   cursor: url('images/cursor_o.png') 16 16, auto;
 }
 
