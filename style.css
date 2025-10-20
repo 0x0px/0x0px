@@ -23,12 +23,9 @@ body {
   background-color: #000000;
 }
 
-
 /* Layout */
-#wrapper, #container, #title, #footer, #url {
+#wrapper, #container, #title, #footer, #url, #contents, footer {
   width: 100%;
-}
-#wrapper, #container, #contents, #title, footer {
   display: flex;
 }
 #container, #contents, #title, #url {
@@ -96,29 +93,55 @@ footer {
   grid-column: 1 / -1;
 }
 
-
 /* Background */
-#background, #bgfilter {
+#background {
   width: 105%;
   height: 105%;
   position: fixed;
-}
-#background {
   top: -2.5%;
   left: -2.5%;
+  background-color: var(--color-surface-1);
+}
+#bg-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transform-origin: center;
   /* filter: blur(12px); */
   transition: opacity 1s;
   opacity: 0;
 }
-#background.loaded {
+#bg-img.loaded {
   opacity: 1;
 }
-#bgfilter {
+#bg-filter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: var(--color-overlay);
 }
-
+#mobile-bg {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  z-index: -1;
+}
+#mobile-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#mobile-bg #bg-filter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
+}
 
 /* Text */
 p, h1, h2 {
@@ -163,8 +186,6 @@ b {
   border-radius: 4px;
   transition: transform 0.3s;
   cursor: pointer;
-}
-button {
   font-size: 15px;
   padding: 12px 16px;
   border: 0;
@@ -277,12 +298,10 @@ hr {
   opacity: 0 !important;
 }
 .carousel-button:hover {
-  opacity: 1;
   transform: translateY(-50%) scale(0.94);
 }
 .carousel-button i {
   font-size: 16px;
-  margin: 0;
 }
 
 
@@ -573,14 +592,8 @@ hr {
   position: relative;
   display: inline-block;
 }
-
 #volumeBtn {
   transition: transform 0.2s ease;
-}
-
-/* Only button scales */
-.volume-wrapper:hover #volumeBtn {
-  transform: scale(0.9);
 }
 
 .volume-container-wrapper {
@@ -779,6 +792,9 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail, .music
   #url {
     grid-template-columns: repeat(2, 1fr);
   }
+  #mobile-bg {
+    display: none;
+  }
   .side-padding {
     padding-left: 40px;
     padding-right: 40px;
@@ -801,6 +817,16 @@ a[href], button, textarea, .button, .carousel-button, .youtube-thumbnail, .music
 @media (max-width: 639px) {
   .carousel-button, .volume-wrapper {
     display: none;
+  }
+  #background #bg-img, #background #bg-filter {
+    display: none;
+  }
+  #container {
+    margin-top: 0;
+    gap: 0;
+  }
+  #wrapper {
+    padding: 0;
   }
 }
 

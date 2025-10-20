@@ -15,32 +15,32 @@ let bgAnimating = false;
 let lastBgMoveTs = 0;
 
 function initBackgroundAndFollower() {
-  const background = document.getElementById('background');
+  const bgImg = document.getElementById('bg-img');
   const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Background Fade-In
   requestAnimationFrame(() => {
-    if (background) background.classList.add('loaded');
+    if (bgImg) bgImg.classList.add('loaded');
   });
 
-  if (!background || prefersReducedMotion) return; // Skip parallax when reduced motion
+  if (!bgImg || prefersReducedMotion) return; // Skip parallax when reduced motion
 
   const startBgAnim = () => {
     if (bgAnimating) return;
     bgAnimating = true;
-    background.style.willChange = 'transform';
+    bgImg.style.willChange = 'transform';
     const step = () => {
       const now = performance.now();
       bgCurrentX += (bgTargetX - bgCurrentX) * smoothFactor;
       bgCurrentY += (bgTargetY - bgCurrentY) * smoothFactor;
-      background.style.transform = `translate(${bgCurrentX}px, ${bgCurrentY}px)`;
+      bgImg.style.transform = `translate(${bgCurrentX}px, ${bgCurrentY}px)`;
 
       const dx = Math.abs(bgTargetX - bgCurrentX);
       const dy = Math.abs(bgTargetY - bgCurrentY);
       const idle = now - lastBgMoveTs > 200;
       if (dx < 0.1 && dy < 0.1 && idle) {
         bgAnimating = false;
-        background.style.willChange = '';
+        bgImg.style.willChange = '';
         return;
       }
       requestAnimationFrame(step);

@@ -20,11 +20,17 @@
 
 <body>
     <!-- Background -->
-    <img id="background" src="images/background.jpg" aria-hidden="true" fetchpriority="high" decoding="async">
-    <div id="bgfilter"></div>
+    <div id="background">
+        <img id="bg-img" src="images/background.jpg" aria-hidden="true" fetchpriority="high" decoding="async">
+        <div id="bg-filter"></div>
+    </div>
     <!-- Contents -->
     <div id="wrapper">
     <main id="container">
+        <div id="mobile-bg">
+            <img src="images/background.jpg" aria-hidden="true" fetchpriority="high" decoding="async">
+            <div id="bg-filter"></div>
+        </div>
         <div id="contents">
             <div id="title" class="side-padding">
                 <img id="profilePhoto" src="images/0x0pf.jpg" alt="0x0 profile photo" loading="lazy" decoding="async">
@@ -221,10 +227,11 @@
                     <button type="submit" id="msgSendBtn">send <i class="fa-regular fa-paper-plane fa-sm"></i></button>
                 </form>
             </div>
+
+            <footer class="side-padding">
+                <span class="desc">© 2025 0x0</span>
+            </footer>
         </div>
-        <footer class="side-padding">
-            <span class="desc">© 2025 0x0</span>
-        </footer>
     </main>
     </div>
   <div id="modal">
