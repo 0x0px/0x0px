@@ -263,7 +263,7 @@ hr {
   backdrop-filter: blur(4px);
   border-radius: 999px;
   color: var(--color-primary);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.25s, transform 0.25s;
   z-index: 1;
   cursor: pointer;
   left: 16px;
@@ -272,16 +272,9 @@ hr {
   left: auto;
   right: 16px;
 }
-.carousel-button {
-  opacity: 1;
-}
 .carousel-button.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.carousel-button,
-.carousel-button.hidden {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: flex !important;
+  opacity: 0 !important;
 }
 .carousel-button:hover {
   opacity: 1;
